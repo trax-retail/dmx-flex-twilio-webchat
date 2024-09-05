@@ -5,7 +5,6 @@ import { MessagingCanvasPhase } from "./MessagingCanvasPhase";
 import { AppState, EngagementPhase } from "../store/definitions";
 import { PreEngagementFormPhase } from "./PreEngagementFormPhase";
 import { LoadingPhase } from "./LoadingPhase";
-import { EntryPoint } from "./EntryPoint";
 import { innerContainerStyles, outerContainerStyles } from "./styles/RootContainer.styles";
 
 const getPhaseComponent = (phase: EngagementPhase) => {
@@ -21,7 +20,7 @@ const getPhaseComponent = (phase: EngagementPhase) => {
 };
 
 export function RootContainer() {
-    const { currentPhase, expanded } = useSelector(({ session }: AppState) => ({
+    const { currentPhase } = useSelector(({ session }: AppState) => ({
         currentPhase: session.currentPhase,
         expanded: session.expanded
     }));
@@ -29,12 +28,9 @@ export function RootContainer() {
     return (
         <Box>
             <Box {...outerContainerStyles}>
-                {expanded && (
-                    <Box data-test="root-container" {...innerContainerStyles}>
-                        {getPhaseComponent(currentPhase)}
-                    </Box>
-                )}
-                <EntryPoint />
+                <Box data-test="root-container" {...innerContainerStyles}>
+                    {getPhaseComponent(currentPhase)}
+                </Box>
             </Box>
         </Box>
     );
