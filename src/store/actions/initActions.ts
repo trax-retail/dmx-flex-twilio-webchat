@@ -38,7 +38,7 @@ export function initSession({ token, conversationSid }: { token: string; convers
             }
 
             participants = await conversation.getParticipants();
-            users = await Promise.all(participants.map(async (p) => p.getUser()));
+            users = await Promise.all(participants.filter(p => <string>p.type !== 'dialogflowcx').map(async (p) => p.getUser()));
             messages = (await conversation.getMessages(MESSAGES_LOAD_COUNT)).items;
         } catch (e) {
             log.error("Something went wrong when initializing session", e);
