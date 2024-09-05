@@ -8,9 +8,7 @@ export const containerStyles: BoxStyleProps = {
     backgroundColor: "colorBackgroundPrimaryStronger",
     padding: "space20",
     paddingTop: "space40",
-    paddingBottom: "space40",
-    borderTopLeftRadius: "borderRadius20",
-    borderTopRightRadius: "borderRadius20"
+    paddingBottom: "space40"
 };
 
 export const titleStyles: TextStyleProps = {
