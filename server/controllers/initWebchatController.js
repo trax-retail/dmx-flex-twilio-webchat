@@ -64,22 +64,6 @@ const sendUserMessage = (conversationSid, identity, messageBody) => {
         });
 };
 
-const sendWelcomeMessage = (conversationSid, customerFriendlyName) => {
-    logInterimAction("Sending welcome message");
-    return getTwilioClient()
-        .conversations.conversations(conversationSid)
-        .messages.create({
-            body: `Welcome ${customerFriendlyName}! An agent will be with you in just a moment.`,
-            author: "Concierge"
-        })
-        .then(() => {
-            logInterimAction("(async) Welcome message sent");
-        })
-        .catch((e) => {
-            logInterimAction(`(async) Couldn't send welcome message: ${e?.message}`);
-        });
-};
-
 const initWebchatController = async (request, response) => {
     logInitialAction("Initiating webchat");
 
@@ -102,10 +86,7 @@ const initWebchatController = async (request, response) => {
     // OPTIONAL — if user query is defined
     if (request.body?.formData?.query) {
         // use it to send a message in behalf of the user with the query as body
-        sendUserMessage(conversationSid, identity, request.body.formData.query).then(() =>
-            // and then send another message from Concierge, letting the user know that an agent will help them soon
-            sendWelcomeMessage(conversationSid, customerFriendlyName)
-        );
+        sendUserMessage(conversationSid, identity, request.body.formData.query);
     }
 
     response.send({
