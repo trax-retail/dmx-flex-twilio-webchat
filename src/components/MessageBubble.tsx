@@ -21,6 +21,7 @@ import {
     readStatusStyles,
     bubbleAndAvatarContainerStyles
 } from "./styles/MessageBubble.styles";
+import {ChannelMetaData} from "./ChannelMetaData";
 
 const doubleDigit = (number: number) => `${number < 10 ? 0 : ""}${number}`;
 
@@ -110,7 +111,7 @@ export const MessageBubble = ({
     };
 
     const author = users?.find((u) => u.identity === message.author)?.friendlyName || message.author;
-
+    
     return (
         <Box
             {...outerContainerStyles}
@@ -129,27 +130,34 @@ export const MessageBubble = ({
                         {isLastOfUserGroup && <UserIcon decorative={true} size="sizeIcon40" />}
                     </Box>
                 )}
-                <Box {...getInnerContainerStyles(belongsToCurrentUser)}>
-                    <Flex hAlignContent="between" width="100%" vAlignContent="center" marginBottom="space20">
-                        <Text {...authorStyles} as="p" aria-hidden style={{ textOverflow: "ellipsis" }} title={author}>
-                            {author}
+                <Flex vertical={true} hAlignContent={belongsToCurrentUser ? "right" : "left"} width="100%" vAlignContent="center">
+                    <Box {...getInnerContainerStyles(belongsToCurrentUser)}>
+                        <Flex hAlignContent="between" width="100%" vAlignContent="center" marginBottom="space20">
+                            <Text {...authorStyles} as="p" aria-hidden style={{ textOverflow: "ellipsis" }} title={author}>
+                                {author}
+                            </Text>
+                            <ScreenReaderOnly as="p">
+                                {belongsToCurrentUser
+                                    ? "You sent at"
+                                    : `${users?.find((u) => u.identity === message.author)?.friendlyName} sent at`}
+                            </ScreenReaderOnly>
+                            <Text {...timeStampStyles} as="p">
+                                {`${doubleDigit(message.dateCreated.getHours())}:${doubleDigit(
+                                    message.dateCreated.getMinutes()
+                                )}`}
+                            </Text>
+                        </Flex>
+                        <Text as="p" {...bodyStyles}>
+                            {message.body ? parseMessageBody(message.body, belongsToCurrentUser) : null}
                         </Text>
-                        <ScreenReaderOnly as="p">
-                            {belongsToCurrentUser
-                                ? "You sent at"
-                                : `${users?.find((u) => u.identity === message.author)?.friendlyName} sent at`}
-                        </ScreenReaderOnly>
-                        <Text {...timeStampStyles} as="p">
-                            {`${doubleDigit(message.dateCreated.getHours())}:${doubleDigit(
-                                message.dateCreated.getMinutes()
-                            )}`}
-                        </Text>
-                    </Flex>
-                    <Text as="p" {...bodyStyles}>
-                        {message.body ? parseMessageBody(message.body, belongsToCurrentUser) : null}
-                    </Text>
-                    {message.type === "media" ? renderMedia() : null}
-                </Box>
+                        {message.type === "media" ? renderMedia() : null}
+                    </Box>
+                    {!belongsToCurrentUser && <>
+                        <Box maxWidth="90%">
+                            <ChannelMetaData />
+                        </Box>
+                    </>}
+                </Flex>
             </Box>
             {read && (
                 <Flex hAlignContent="right" vAlignContent="center" marginTop="space20">
