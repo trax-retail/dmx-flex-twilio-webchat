@@ -1,6 +1,7 @@
-import { Client, Conversation, Participant, Message, User } from "@twilio/conversations";
+import { Client, Conversation, Participant, Message, User, ChannelMetadata } from "@twilio/conversations";
 import { GenericThemeShape } from "@twilio-paste/theme";
 import { AlertVariants } from "@twilio-paste/core/alert";
+import { Sid } from "twilio/lib/interfaces";
 
 import { FileAttachmentConfig, TranscriptConfig } from "../definitions";
 
@@ -16,6 +17,9 @@ export type ChatState = {
     participants?: Participant[];
     users?: User[];
     messages?: Message[];
+    channelMetadataMap?: {
+        [key: Sid]: ChannelMetadata | null
+    };
     attachedFiles?: File[];
     conversationState?: string;
 };

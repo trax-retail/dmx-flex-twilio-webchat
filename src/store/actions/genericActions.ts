@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Conversation } from "@twilio/conversations";
+import { Conversation, ChannelMetadata } from "@twilio/conversations";
 
 import { EngagementPhase, Notification, PreEngagementData } from "../definitions";
 import {
@@ -43,12 +43,20 @@ export function removeNotification(id: string) {
 
 export function getMoreMessages({ anchor, conversation }: { anchor: number; conversation: Conversation }) {
     return async (dispatch: Dispatch) =>
+    {
+        const messages = (await conversation.getMessages(MESSAGES_LOAD_COUNT, anchor)).items;
+
+        const channelMetadataMap = (await Promise.all(messages.map(async m => <[string, ChannelMetadata | null]>[m.sid, await m.getChannelMetadata()])))
+            .reduce((p, c) => ({[c[0]]: c[1], ...p}));
+        
         dispatch({
             type: ACTION_ADD_MULTIPLE_MESSAGES,
             payload: {
-                messages: (await conversation.getMessages(MESSAGES_LOAD_COUNT, anchor)).items
+                messages,
+                channelMetadataMap,
             }
         });
+    }
 }
 
 export function changeExpandedStatus({ expanded }: { expanded: boolean }) {

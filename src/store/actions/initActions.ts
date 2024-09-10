@@ -1,4 +1,4 @@
-import { Client } from "@twilio/conversations";
+import { Client, ChannelMetadata } from "@twilio/conversations";
 import { Dispatch } from "redux";
 import log from "loglevel";
 
@@ -26,6 +26,7 @@ export function initSession({ token, conversationSid }: { token: string; convers
         let participants;
         let users;
         let messages;
+        let channelMetadataMap;
 
         try {
             conversationsClient = await Client.create(token);
@@ -40,6 +41,9 @@ export function initSession({ token, conversationSid }: { token: string; convers
             participants = await conversation.getParticipants();
             users = await Promise.all(participants.filter(p => <string>p.type !== 'dialogflowcx').map(async (p) => p.getUser()));
             messages = (await conversation.getMessages(MESSAGES_LOAD_COUNT)).items;
+            channelMetadataMap = (await Promise.all(messages.map(async m => <[string, ChannelMetadata | null]>[m.sid, await m.getChannelMetadata()])))
+                .reduce((p, c) => ({[c[0]]: c[1], ...p}));
+            
         } catch (e) {
             log.error("Something went wrong when initializing session", e);
             throw e;
@@ -55,6 +59,7 @@ export function initSession({ token, conversationSid }: { token: string; convers
                 users,
                 participants,
                 messages,
+                channelMetadataMap,
                 conversationState: conversation.state?.current,
                 currentPhase: EngagementPhase.MessagingCanvas
             }

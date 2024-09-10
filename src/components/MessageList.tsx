@@ -43,8 +43,9 @@ const isFirstOfDateGroup = (message: Message, i: number, messages: Message[]) =>
 };
 
 export const MessageList = () => {
-    const { messages, participants, users, conversation, conversationsClient } = useSelector((state: AppState) => ({
+    const { messages, channelMetadataMap, participants, users, conversation, conversationsClient } = useSelector((state: AppState) => ({
         messages: state.chat.messages,
+        channelMetadataMap: state.chat.channelMetadataMap,
         participants: state.chat.participants,
         users: state.chat.users,
         conversation: state.chat.conversation,
@@ -210,6 +211,7 @@ export const MessageList = () => {
                     {renderSeparatorIfApplicable(message, i)}
                     <MessageBubble
                         message={message}
+                        channelMetadata={channelMetadataMap ? channelMetadataMap[message.sid] ?? null : null}
                         isLast={i === messages.length - 1}
                         isLastOfUserGroup={isLastOfUserGroup(message, i, messages)}
                         focusable={message.index === focusIndex}

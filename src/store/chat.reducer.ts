@@ -40,13 +40,18 @@ export const ChatReducer: Reducer = (state: ChatState = initialState, action: An
                 conversationState: action.payload.conversationState,
                 users: action.payload.users,
                 participants: action.payload.participants,
-                messages: action.payload.messages
+                messages: action.payload.messages,
+                channelMetadataMap: action.payload.channelMetadataMap,
             };
         }
         case ACTION_ADD_MULTIPLE_MESSAGES: {
             return {
                 ...state,
-                messages: [...action.payload.messages, ...(state.messages || [])]
+                messages: [...action.payload.messages, ...(state.messages || [])],
+                channelMetadataMap: {
+                    ...(state.channelMetadataMap || {}),
+                    ...action.payload.channelMetadataMap,
+                }
             };
         }
         case ACTION_ADD_MESSAGE: {
