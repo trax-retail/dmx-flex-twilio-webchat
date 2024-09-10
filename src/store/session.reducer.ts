@@ -9,10 +9,20 @@ import {
     ACTION_UPDATE_PRE_ENGAGEMENT_DATA
 } from "./actions/actionTypes";
 
+declare global {
+    interface Window {
+        userData: {
+            id: string;
+            name: string;
+            email: string;
+        }
+    }
+}
+
 const initialState: SessionState = {
     currentPhase: EngagementPhase.Loading,
     expanded: true,
-    preEngagementData: { name: "", query: "", email: "" }
+    preEngagementData: { id: window.userData.id, name: window.userData.name, query: "", email: window.userData.email }
 };
 
 export const SessionReducer: Reducer<SessionState, AnyAction> = (

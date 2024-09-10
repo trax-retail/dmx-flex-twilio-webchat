@@ -51,38 +51,11 @@ export const PreEngagementFormPhase = () => {
             <NotificationBar />
             <Box as="form" data-test="pre-engagement-chat-form" onSubmit={handleSubmit} {...formStyles}>
                 <Text {...titleStyles} as="h3">
-                    Hi there!
+                    Hi {name}!
                 </Text>
-                <Text {...introStyles} as="p">
-                    We&#39;re here to help. Please give us some info to get started.
-                </Text>
-                <Box {...fieldStyles}>
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                        type="text"
-                        placeholder="Please enter your name"
-                        name="name"
-                        data-test="pre-engagement-chat-form-name-input"
-                        value={name}
-                        onChange={(e) => dispatch(updatePreEngagementData({ name: e.target.value }))}
-                        required
-                    />
-                </Box>
-                <Box {...fieldStyles}>
-                    <Label htmlFor="email">Email address</Label>
-                    <Input
-                        type="email"
-                        placeholder="Please enter your email address"
-                        name="email"
-                        data-test="pre-engagement-chat-form-email-input"
-                        value={email}
-                        onChange={(e) => dispatch(updatePreEngagementData({ email: e.target.value }))}
-                        required
-                    />
-                </Box>
 
                 <Box {...fieldStyles}>
-                    <Label htmlFor="query">How can we help you?</Label>
+                    <Label htmlFor="query">What can I assist you with today?</Label>
                     <TextArea
                         placeholder="Ask a question"
                         name="query"
