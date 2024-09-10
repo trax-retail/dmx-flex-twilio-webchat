@@ -23,7 +23,7 @@ export const MessagingCanvasPhase = () => {
 
     return (
         <Wrapper>
-            <Header customTitle="Merchandiser Chat" />
+            <Header />
             <NotificationBar />
             <MessageList />
             {conversationState === "active" ? <MessageInput /> : <ConversationEnded />}
