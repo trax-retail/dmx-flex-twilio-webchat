@@ -1,4 +1,4 @@
-import { Media, Message } from "@twilio/conversations";
+import {ChannelMetadata, Media, Message} from "@twilio/conversations";
 import { Box } from "@twilio-paste/core/box";
 import { ScreenReaderOnly } from "@twilio-paste/core/screen-reader-only";
 import { useSelector } from "react-redux";
@@ -27,12 +27,14 @@ const doubleDigit = (number: number) => `${number < 10 ? 0 : ""}${number}`;
 
 export const MessageBubble = ({
     message,
+    channelMetadata,
     isLast,
     isLastOfUserGroup,
     focusable,
     updateFocus
 }: {
     message: Message;
+    channelMetadata: ChannelMetadata | null;
     isLast: boolean;
     isLastOfUserGroup: boolean;
     focusable: boolean;
@@ -152,11 +154,9 @@ export const MessageBubble = ({
                         </Text>
                         {message.type === "media" ? renderMedia() : null}
                     </Box>
-                    {!belongsToCurrentUser && <>
-                        <Box maxWidth="90%">
-                            <ChannelMetaData />
-                        </Box>
-                    </>}
+                    <Box maxWidth="90%">
+                        <ChannelMetaData channelMetadata={channelMetadata} />
+                    </Box>
                 </Flex>
             </Box>
             {read && (

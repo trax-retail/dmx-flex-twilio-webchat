@@ -3,6 +3,7 @@ import {Box} from "@twilio-paste/core/box";
 import log from "loglevel";
 
 import {AppState} from "../store/definitions";
+import {ChannelMetadata} from "@twilio/conversations";
 
 interface DialogflowChipsContent {
     type: "chips";
@@ -12,61 +13,47 @@ interface DialogflowChipsContent {
     }[];
 }
 
-interface DialogflowRichContent {
-    richContent: (DialogflowChipsContent)[][];
+
+function getDialogflowChipsContent(channelMetadata: ChannelMetadata | null): DialogflowChipsContent | null {
+    if (channelMetadata?.type !== "dialogflowcx") {
+        return null;
+    }
+    
+    const data: any = channelMetadata.data;
+    
+    if (!Array.isArray(data?.queryResult?.responseMessages)) {
+        return null;
+    }
+    
+    for (let responseMessage of data.queryResult.responseMessages) {
+        if (!Array.isArray(responseMessage.payload?.richContent)) {
+            continue;
+        }
+        
+        for (let richContent of responseMessage.payload.richContent) {
+            if (!Array.isArray(richContent)) {
+                continue;
+            }
+            
+            for (let candidateContent of richContent) {
+                if (candidateContent.type === 'chips' && Array.isArray(candidateContent.options)) {
+                    return candidateContent;
+                }
+            }
+        }
+    }
+    
+    return null;
 }
 
-type ChannelMetaDataPayload = null | DialogflowRichContent;
-
-export const ChannelMetaData = () => {
-
-    const payload: ChannelMetaDataPayload = {
-        "richContent": [
-            [
-                {
-                    "options": [
-                        {
-                            "mode": "blocking",
-                            "text": "Openforce Account"
-                        },
-                        {
-                            "text": "Support Assistance",
-                            "mode": "blocking"
-                        },
-                        {
-                            "mode": "blocking",
-                            "text": "Payment Issues"
-                        },
-                        {
-                            "mode": "blocking",
-                            "text": "Survey.com Policies"
-                        },
-                        {
-                            "text": "Extensions",
-                            "mode": "blocking"
-                        },
-                        {
-                            "mode": "blocking",
-                            "text": "New to the app? Getting Started"
-                        },
-                        {
-                            "text": "App issues",
-                            "mode": "blocking"
-                        },
-                        {
-                            "text": "Chat with a Live Agent",
-                            "mode": "blocking"
-                        }
-                    ],
-                    "type": "chips"
-                }
-            ]
-        ]
-    };
-
-    //TODO: Don't assume payload is Dialogflow or chips
+export const ChannelMetaData = ({ channelMetadata }: { channelMetadata: ChannelMetadata | null }) => {
+    const dialogflowChipsContent = getDialogflowChipsContent(channelMetadata);
     
-    const chipOptions = payload.richContent[0][0].options.map(x => x.text);
+    if (dialogflowChipsContent === null) {
+        return <></>;
+    }
+    
+    const chipOptions = dialogflowChipsContent.options.map(x => x.text);
 
     const { conversation } = useSelector((state: AppState) => ({
         conversation: state.chat.conversation
