@@ -1,4 +1,3 @@
-import { Input } from "@twilio-paste/core/input";
 import { Label } from "@twilio-paste/core/label";
 import { Box } from "@twilio-paste/core/box";
 import { TextArea } from "@twilio-paste/core/textarea";
@@ -14,7 +13,7 @@ import { AppState, EngagementPhase } from "../store/definitions";
 import { Header } from "./Header";
 import { notifications } from "../notifications";
 import { NotificationBar } from "./NotificationBar";
-import { introStyles, fieldStyles, titleStyles, formStyles } from "./styles/PreEngagementFormPhase.styles";
+import { fieldStyles, titleStyles, formStyles } from "./styles/PreEngagementFormPhase.styles";
 
 export const PreEngagementFormPhase = () => {
     const { name, email, query } = useSelector((state: AppState) => state.session.preEngagementData) || {};
