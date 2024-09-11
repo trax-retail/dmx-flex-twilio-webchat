@@ -1,9 +1,9 @@
 import {useSelector} from "react-redux";
 import {Box} from "@twilio-paste/core/box";
+import {ChannelMetadata} from "@twilio/conversations";
 import log from "loglevel";
 
 import {AppState} from "../store/definitions";
-import {ChannelMetadata} from "@twilio/conversations";
 
 interface DialogflowChipsContent {
     type: "chips";
@@ -18,24 +18,24 @@ function getDialogflowChipsContent(channelMetadata: ChannelMetadata | null): Dia
     if (channelMetadata?.type !== "dialogflowcx") {
         return null;
     }
-    
-    const data: any = channelMetadata.data;
+
+    const { data } = channelMetadata;
     
     if (!Array.isArray(data?.queryResult?.responseMessages)) {
         return null;
     }
     
-    for (let responseMessage of data.queryResult.responseMessages) {
+    for (const responseMessage of data.queryResult.responseMessages) {
         if (!Array.isArray(responseMessage.payload?.richContent)) {
             continue;
         }
         
-        for (let richContent of responseMessage.payload.richContent) {
+        for (const richContent of responseMessage.payload.richContent) {
             if (!Array.isArray(richContent)) {
                 continue;
             }
             
-            for (let candidateContent of richContent) {
+            for (const candidateContent of richContent) {
                 if (candidateContent.type === 'chips' && Array.isArray(candidateContent.options)) {
                     return candidateContent;
                 }
@@ -47,6 +47,10 @@ function getDialogflowChipsContent(channelMetadata: ChannelMetadata | null): Dia
 }
 
 export const ChannelMetaData = ({ channelMetadata }: { channelMetadata: ChannelMetadata | null }) => {
+    const { conversation } = useSelector((state: AppState) => ({
+        conversation: state.chat.conversation
+    }));
+    
     const dialogflowChipsContent = getDialogflowChipsContent(channelMetadata);
     
     if (dialogflowChipsContent === null) {
@@ -54,10 +58,6 @@ export const ChannelMetaData = ({ channelMetadata }: { channelMetadata: ChannelM
     }
     
     const chipOptions = dialogflowChipsContent.options.map(x => x.text);
-
-    const { conversation } = useSelector((state: AppState) => ({
-        conversation: state.chat.conversation
-    }));
 
     const send = async (text: string) => {
         if (!conversation) {
