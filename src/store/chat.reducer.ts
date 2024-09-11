@@ -57,7 +57,11 @@ export const ChatReducer: Reducer = (state: ChatState = initialState, action: An
         case ACTION_ADD_MESSAGE: {
             return {
                 ...state,
-                messages: [...(state.messages || []), action.payload.message]
+                messages: [...(state.messages || []), action.payload.message],
+                channelMetadataMap: {
+                    ...(state.channelMetadataMap || {}),
+                    [action.payload.message.sid]: action.payload.channelMetadata
+                }
             };
         }
         case ACTION_REMOVE_MESSAGE: {

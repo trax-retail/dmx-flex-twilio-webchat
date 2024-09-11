@@ -4,10 +4,12 @@ import { Dispatch } from "redux";
 import { ACTION_ADD_MESSAGE, ACTION_REMOVE_MESSAGE, ACTION_UPDATE_MESSAGE } from "../actionTypes";
 
 export const initMessagesListener = (conversation: Conversation, dispatch: Dispatch) => {
-    conversation.addListener("messageAdded", (message: Message) => {
+    conversation.addListener("messageAdded", async (message: Message) => {
+        const channelMetadata = await message.getChannelMetadata();
+        
         dispatch({
             type: ACTION_ADD_MESSAGE,
-            payload: { message }
+            payload: { message, channelMetadata }
         });
     });
     conversation.addListener("messageRemoved", (message: Message) => {
