@@ -28,7 +28,7 @@ export function initSession({ token, conversationSid }: { token: string; convers
         let messages;
 
         try {
-            conversationsClient = await Client.create(token);
+            conversationsClient = new Client(token);
             try {
                 conversation = await conversationsClient.getConversationBySid(conversationSid);
             } catch (e) {
@@ -38,8 +38,14 @@ export function initSession({ token, conversationSid }: { token: string; convers
             }
 
             participants = await conversation.getParticipants();
-            users = await Promise.all(participants.map(async (p) => p.getUser()));
+
+            log.info(participants);
+
+            users = await Promise.all(participants.filter((p) => p.type === "chat").map(async (p) => p.getUser()));
+            // users = await Promise.all(participants.map(async (p) => p.getUser()));
             messages = (await conversation.getMessages(MESSAGES_LOAD_COUNT)).items;
+
+            // messages = messages.map(async (message) => log.info(await message.getChannelMetadata()));
         } catch (e) {
             log.error("Something went wrong when initializing session", e);
             throw e;

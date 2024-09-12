@@ -39,7 +39,7 @@ const isFirstOfDateGroup = (message: Message, i: number, messages: Message[]) =>
     const prevMessage = messages[i - 1];
 
     // if the previous message has a date older than the current message, this message is the first for this date
-    return getDaysOld(prevMessage.dateCreated) > getDaysOld(message.dateCreated);
+    return getDaysOld(prevMessage.dateCreated as Date) > getDaysOld(message.dateCreated as Date);
 };
 
 export const MessageList = () => {
@@ -168,7 +168,7 @@ export const MessageList = () => {
                         Chat started
                     </Text>
                     <Text as="p" {...conversationEventDateStyles}>
-                        {conversation?.dateCreated.toLocaleString()}
+                        {conversation?.dateCreated instanceof Date ? conversation?.dateCreated.toLocaleString() : ""}
                     </Text>
                 </Box>
             </>

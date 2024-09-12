@@ -21,7 +21,7 @@ export const MessageListSeparator = ({
         let separatorText;
         if (separatorType === "new") {
             separatorText = "New";
-        } else {
+        } else if (message.dateCreated instanceof Date) {
             const daysOld = getDaysOld(message.dateCreated);
             if (daysOld === 0) {
                 separatorText = "Today";

@@ -2,7 +2,9 @@ import { Transcript } from "./generateTranscripts";
 
 export const generateDuration = (transcriptData: Transcript[]) => {
     let deltaInSeconds =
-        (transcriptData[transcriptData.length - 1].timeStamp.getTime() - transcriptData[0].timeStamp.getTime()) / 1000;
+        ((transcriptData[transcriptData.length - 1].timeStamp as Date).getTime() -
+            (transcriptData[0].timeStamp as Date).getTime()) /
+        1000;
 
     const days = Math.floor(deltaInSeconds / (24 * 60 * 60));
     deltaInSeconds -= days * (24 * 60 * 60);

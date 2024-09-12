@@ -13,60 +13,11 @@ import type {
 
 import { MockedPaginator } from "../../../test-utils";
 
-const { Conversation: OriginalConversation } =
-    jest.requireActual<{ Conversation: typeof ConversationType }>("@twilio/conversations");
+const { Conversation: OriginalConversation } = jest.requireActual<{ Conversation: typeof ConversationType }>(
+    "@twilio/conversations"
+);
 
 export class Conversation extends OriginalConversation {
-    /**
-     * Add a participant to the conversation by its identity.
-     * @param identity Identity of the Client to add.
-     * @param attributes Attributes to be attached to the participant.
-     */
-    async add(identity: string, attributes?: Record<string, unknown>): Promise<void> {
-        return Promise.resolve();
-    }
-
-    /**
-     * Add a non-chat participant to the conversation.
-     * @param proxyAddress Proxy (Twilio) address of the participant.
-     * @param address User address of the participant.
-     * @param attributes Attributes to be attached to the participant.
-     * @param bindingOptions Options for adding email participants - name and CC/To level.
-     */
-    async addNonChatParticipant(
-        proxyAddress: string,
-        address: string,
-        attributes?: Record<string, unknown>,
-        bindingOptions?: ParticipantBindingOptions
-    ): Promise<void> {
-        return Promise.resolve();
-    }
-
-    /**
-     * Advance the conversation's last read message index to the current read horizon.
-     * Rejects if the user is not a participant of the conversation.
-     * Last read message index is updated only if the new index value is higher than the previous.
-     * @param index Message index to advance to.
-     * @return Resulting unread messages count in the conversation.
-     */
-    async advanceLastReadMessageIndex(index: number): Promise<number> {
-        return Promise.resolve(42);
-    }
-
-    /**
-     * Delete the conversation and unsubscribe from its events.
-     */
-    async delete(): Promise<Conversation> {
-        return this as unknown as Conversation;
-    }
-
-    /**
-     * Get the custom attributes of this Conversation.
-     */
-    async getAttributes(): Promise<Record<string, unknown>> {
-        return Promise.resolve({});
-    }
-
     /**
      * Returns messages from the conversation using the paginator interface.
      * @param pageSize Number of messages to return in a single chunk. Default is 30.
@@ -177,22 +128,6 @@ export class Conversation extends OriginalConversation {
     }
 
     /**
-     * Send a message to the conversation.
-     * @param message Message body for the text message,
-     * `FormData` or {@link SendMediaOptions} for media content. Sending FormData is supported only with the browser engine.
-     * @param messageAttributes Attributes for the message.
-     * @param emailOptions Email options for the message.
-     * @return Index of the new message.
-     */
-    async sendMessage(
-        message: string | FormData | SendMediaOptions | null,
-        messageAttributes?: Record<string, unknown>,
-        emailOptions?: SendEmailOptions
-    ): Promise<number> {
-        return Promise.resolve(1);
-    }
-
-    /**
      * New interface to prepare for sending a message.
      * Use instead of `sendMessage`.
      * @return A MessageBuilder to help set all message sending options.
@@ -234,22 +169,6 @@ export class Conversation extends OriginalConversation {
     }
 
     /**
-     * Update the attributes of the conversation.
-     * @param attributes New attributes.
-     */
-    async updateAttributes(attributes: Record<string, unknown>): Promise<Conversation> {
-        return this;
-    }
-
-    /**
-     * Update the friendly name of the conversation.
-     * @param friendlyName New friendly name.
-     */
-    async updateFriendlyName(friendlyName: string): Promise<Conversation> {
-        return this;
-    }
-
-    /**
      * Set the last read message index to the current read horizon.
      * @param index Message index to set as last read.
      * If null is provided, then the behavior is identical to {@link Conversation.setAllMessagesUnread}.
@@ -257,23 +176,6 @@ export class Conversation extends OriginalConversation {
      */
     async updateLastReadMessageIndex(index: number | null): Promise<number> {
         return Promise.resolve(0);
-    }
-
-    /**
-     * Update the unique name of the conversation.
-     * @param uniqueName New unique name for the conversation. Setting unique name to null removes it.
-     */
-    async updateUniqueName(uniqueName: string | null): Promise<Conversation> {
-        return this;
-    }
-
-    /**
-     * Load and subscribe to this conversation and do not subscribe to its participants and messages.
-     * This or _subscribeStreams will need to be called before any events on conversation will fire.
-     * @internal
-     */
-    async _subscribe(): Promise<unknown> {
-        return Promise.resolve({});
     }
 
     /**

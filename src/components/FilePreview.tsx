@@ -71,7 +71,7 @@ export const FilePreview = (props: FilePreviewProps) => {
         }
 
         try {
-            const url = media ? await media.getContentTemporaryUrl() : URL.createObjectURL(file);
+            const url = (media ? await media.getContentTemporaryUrl() : URL.createObjectURL(file)) as any;
             window.open(url);
         } catch (e) {
             log.error(`Failed downloading message attachment: ${e}`);

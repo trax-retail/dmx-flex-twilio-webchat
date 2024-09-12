@@ -71,7 +71,7 @@ export const Transcript = (props: TranscriptProps) => {
             agentNames.forEach((name) => (fileName = fileName.concat(`-and-${name}`)));
         }
 
-        fileName = fileName.concat(`-${slugify(transcriptData[0].timeStamp.toDateString())}`);
+        fileName = fileName.concat(`-${slugify(transcriptData[0].timeStamp?.toDateString() as string)}`);
         fileName = fileName.toLowerCase();
         setIsGeneratingTranscript(false);
         if (mediaInfo.length > 0) {
@@ -81,7 +81,7 @@ export const Transcript = (props: TranscriptProps) => {
             const folder = zip.folder(fileName);
             folder?.file(`${fileName}.txt`, transcriptBlob);
             mediaInfo.forEach((info) => {
-                const blobPromise = fetch(info.url).then(async (response) => {
+                const blobPromise = fetch(info.url as string).then(async (response) => {
                     if (response.status === 200) return response.blob();
                     return Promise.reject(new Error(response.statusText));
                 });

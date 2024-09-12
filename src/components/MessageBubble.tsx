@@ -109,7 +109,7 @@ export const MessageBubble = ({
         }
     };
 
-    const author = users?.find((u) => u.identity === message.author)?.friendlyName || message.author;
+    const author = (users?.find((u) => u.identity === message.author)?.friendlyName || message.author) as any;
 
     return (
         <Box
@@ -140,8 +140,8 @@ export const MessageBubble = ({
                                 : `${users?.find((u) => u.identity === message.author)?.friendlyName} sent at`}
                         </ScreenReaderOnly>
                         <Text {...timeStampStyles} as="p">
-                            {`${doubleDigit(message.dateCreated.getHours())}:${doubleDigit(
-                                message.dateCreated.getMinutes()
+                            {`${doubleDigit(message.dateCreated ? message.dateCreated.getHours() : 0)}:${doubleDigit(
+                                message.dateCreated ? message.dateCreated?.getMinutes() : 0
                             )}`}
                         </Text>
                     </Flex>

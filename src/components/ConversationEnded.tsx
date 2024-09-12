@@ -3,6 +3,7 @@ import { Box } from "@twilio-paste/core/box";
 import { Text } from "@twilio-paste/core/text";
 import { Button } from "@twilio-paste/core/button";
 import { useDispatch, useSelector } from "react-redux";
+import { JSONObject } from "@twilio/conversations";
 
 import { sessionDataHandler } from "../sessionDataHandler";
 import { changeEngagementPhase, updatePreEngagementData } from "../store/actions/genericActions";
@@ -15,7 +16,10 @@ export const ConversationEnded = () => {
     const { messages, users, preEngagementData, transcriptConfig } = useSelector((state: AppState) => ({
         messages: state.chat.messages,
         users: state.chat.users,
-        preEngagementData: state.chat.conversation?.attributes.pre_engagement_data,
+        preEngagementData:
+            state.chat.conversation?.attributes === null
+                ? ""
+                : (state.chat.conversation?.attributes as JSONObject).pre_engagement_data,
         transcriptConfig: state.config.transcript
     }));
 
