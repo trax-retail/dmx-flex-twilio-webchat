@@ -17,8 +17,6 @@ provider:
     #TODO: environment specific
     ALLOWED_ORIGINS: https://localhost:48264,https://merchandiser-web.survey-stage.com,https://merchandiser-web.survey.com
     
-    #TODO: figure this out
-    REACT_APP_SERVER_URL: https://48yf7zl8ge.execute-api.us-east-1.amazonaws.com/staging/
     DOWNLOAD_TRANSCRIPT_ENABLED: false
     EMAIL_TRANSCRIPT_ENABLED: false
 
