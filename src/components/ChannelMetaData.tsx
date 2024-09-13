@@ -19,13 +19,25 @@ function getDialogflowChipsContent(channelMetadata: ChannelMetadata | null): Dia
         return null;
     }
 
-    const { data } = channelMetadata;
+    const { data } = channelMetadata as { data: Record<string, unknown> };
     
-    if (!Array.isArray(data?.queryResult?.responseMessages)) {
+    if (!data || !("queryResult" in data)) {
         return null;
     }
     
-    for (const responseMessage of data.queryResult.responseMessages) {
+    const { queryResult } = data as { queryResult: Record<string, unknown> };
+    
+    if (!queryResult || !("responseMessages" in queryResult)) {
+        return null;
+    }
+    
+    const { responseMessages } = queryResult;
+    
+    if (!responseMessages || !Array.isArray(responseMessages)) {
+        return null;
+    }
+    
+    for (const responseMessage of responseMessages) {
         if (!Array.isArray(responseMessage.payload?.richContent)) {
             continue;
         }
