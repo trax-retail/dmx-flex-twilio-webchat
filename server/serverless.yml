@@ -27,10 +27,4 @@ functions:
       - http:
           path: /{proxy+}
           method: ANY
-          cors:
-            origins:
-              - https://localhost:48264
-              - https://merchandiser-web.survey-stage.com
-              - https://merchandiser-web.survey.com
-            headers: '*'
-            allowCredentials: false
+          cors: true
