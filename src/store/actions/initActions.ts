@@ -29,7 +29,7 @@ export function initSession({ token, conversationSid }: { token: string; convers
         let channelMetadataMap;
 
         try {
-            conversationsClient = await Client.create(token);
+            conversationsClient = new Client(token);
             try {
                 conversation = await conversationsClient.getConversationBySid(conversationSid);
             } catch (e) {

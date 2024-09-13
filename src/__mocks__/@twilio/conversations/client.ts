@@ -3,8 +3,9 @@ import type { ClientOptions, Client as ClientType, ConnectionState, User as User
 import { Conversation } from "./conversation";
 import { MockedPaginator } from "../../../test-utils";
 
-const { Client: ConversationClient, User } =
-    jest.requireActual<{ Client: typeof ClientType; User: typeof UserType }>("@twilio/conversations");
+const { Client: ConversationClient, User } = jest.requireActual<{ Client: typeof ClientType; User: typeof UserType }>(
+    "@twilio/conversations"
+);
 
 export class Client extends ConversationClient {
     /**
@@ -65,77 +66,6 @@ export class Client extends ConversationClient {
      */
     async shutdown(): Promise<void> {
         return Promise.resolve();
-    }
-
-    /**
-     * Update the token used by the client and re-register with the Conversations services.
-     * @param token New access token.
-     */
-    async updateToken(): Promise<Client> {
-        return this;
-    }
-
-    /**
-     * Get a known conversation by its SID.
-     * @param conversationSid Conversation sid
-     */
-    async getConversationBySid(conversationSid: string): Promise<Conversation> {
-        return new Conversation(
-            {
-                channel: "chat",
-                entityName: "",
-                uniqueName: "",
-                attributes: {},
-                lastConsumedMessageIndex: 0,
-                dateCreated: new Date(),
-                dateUpdated: new Date()
-            },
-            conversationSid,
-            {
-                self: "",
-                messages: "",
-                participants: ""
-            },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {} as any,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {} as any
-        );
-    }
-
-    /**
-     * Get a known conversation by its unique identifier name.
-     * @param uniqueName The unique identifier name of the conversation.
-     */
-    async getConversationByUniqueName(): Promise<Conversation> {
-        return new Conversation(
-            {
-                channel: "chat",
-                entityName: "",
-                uniqueName: "",
-                attributes: {},
-                lastConsumedMessageIndex: 0,
-                dateCreated: new Date(),
-                dateUpdated: new Date()
-            },
-            "sid",
-            {
-                self: "",
-                messages: "",
-                participants: ""
-            },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {} as any,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {} as any
-        );
-    }
-
-    /**
-     * Get the current list of all the subscribed conversations.
-     */
-    async getSubscribedConversations(): Promise<MockedPaginator<Conversation>> {
-        return new MockedPaginator();
     }
 
     /**
