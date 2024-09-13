@@ -1,5 +1,9 @@
-require("dotenv").config();
+if (!process.env.ACCOUNT_SID) {
+    require("dotenv").config();
+}
+
 const express = require("express");
+const serverless = require('serverless-http');
 
 const { validateRequestOriginMiddleware } = require("./middlewares/validateRequestOriginMiddleware");
 const { initWebchatController } = require("./controllers/initWebchatController");
@@ -23,3 +27,5 @@ app.listen(port, () => {
 
 app.post("/initWebchat", validateRequestOriginMiddleware, initWebchatController);
 app.post("/refreshToken", validateRequestOriginMiddleware, refreshTokenController);
+
+module.exports.handler = serverless(app);

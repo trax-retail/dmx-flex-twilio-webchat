@@ -1,0 +1,38 @@
+service: twilio-flex
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    ACCOUNT_SID: ${env:ACCOUNT_SID}
+    AUTH_TOKEN: ${env:AUTH_TOKEN}
+    API_KEY: ${env:API_KEY}
+    API_SECRET: ${env:API_SECRET}
+    ADDRESS_SID: ${env:ADDRESS_SID}
+    CONVERSATIONS_SERVICE_SID: ${env:CONVERSATIONS_SERVICE_SID}
+    
+    #TODO: environment specific
+    ALLOWED_ORIGINS: https://localhost:48264,https://merchandiser-web.survey-stage.com,https://merchandiser-web.survey.com
+    
+    #TODO: figure this out
+    REACT_APP_SERVER_URL: https://48yf7zl8ge.execute-api.us-east-1.amazonaws.com/staging/
+    DOWNLOAD_TRANSCRIPT_ENABLED: false
+    EMAIL_TRANSCRIPT_ENABLED: false
+
+functions:
+  handler:
+    handler: index.handler
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors:
+            origins:
+              - https://localhost:48264
+              - https://merchandiser-web.survey-stage.com
+              - https://merchandiser-web.survey.com
+            headers: '*'
+            allowCredentials: false

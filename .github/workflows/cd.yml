@@ -1,0 +1,47 @@
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        default: staging
+        description: Which environment?
+
+name: CD (Server)
+
+run-name: Deploy ${{ github.ref_name }} to ${{ inputs.environment }}
+
+concurrency: ${{ github.event.inputs.environment }}
+
+env:
+  AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+  AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+  API_KEY: ${{ secrets.TWILIO_API_KEY }}
+  API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+  ADDRESS_SID: ${{ secrets.TWILIO_ADDRESS_SID }}
+  CONVERSATIONS_SERVICE_SID: ${{ secrets.TWILIO_CONVERSATIONS_SERVICE_SID }}
+
+jobs:
+  cd:
+    name: CD
+    runs-on: [self-hosted, Linux, X64, trax, aws]
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-dotnet@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Install Dependencies
+        working-directory: ./server
+        run: |
+          yarn install
+      - name: Deploy
+        working-directory: ./server
+        run: |
+          npx serverless deploy --stage ${{ github.event.inputs.environment }}

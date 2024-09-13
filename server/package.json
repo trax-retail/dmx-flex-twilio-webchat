@@ -1,0 +1,21 @@
+{
+  "name": "twilio-webchat-server",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "express": "4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "serverless-http": "3.2.0",
+    "twilio": "^3.74.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "devDependencies": {
+    "serverless": "3.39.0"
+  }
+}
