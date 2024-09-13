@@ -25,3 +25,30 @@ functions:
           path: /{proxy+}
           method: ANY
           cors: true
+          
+resources:
+  Resources:
+    ApiGatewayCustomDomain:
+      Type: AWS::ApiGateway::DomainName
+      Properties:
+        DomainName: twilio-flex.${env:AWS_HOSTED_ZONE_DOMAIN}
+        EndpointConfiguration: REGIONAL
+        RegionalCertificateArn: ${env:AWS_CERTIFICATE_ARN}
+
+    ApiGatewayBasePathMapping:
+      Type: AWS::ApiGateway::BasePathMapping
+      Properties:
+        DomainName: !Ref ApiGatewayCustomDomain
+        RestApiId: !Ref ApiGatewayRestApi
+        Stage: !Ref ApiGatewayStage
+        BasePath: ''
+
+    Route53RecordSet:
+      Type: AWS::Route53::RecordSet
+      Properties:
+        HostedZoneId: ${env:AWS_HOSTED_ZONE_ID}
+        Name: twilio-flex.${env:AWS_HOSTED_ZONE_DOMAIN}
+        Type: A
+        AliasTarget:
+          DNSName: !GetAtt ApiGatewayCustomDomain.RegionalDomainName
+          HostedZoneId: !GetAtt ApiGatewayCustomDomain.RegionalHostedZoneId
