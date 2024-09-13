@@ -155,7 +155,7 @@ export const MessageBubble = ({
                         {message.type === "media" ? renderMedia() : null}
                     </Box>
                     <Box maxWidth="90%">
-                        <ChannelMetaData channelMetadata={channelMetadata} />
+                        <ChannelMetaData channelMetadata={channelMetadata} isLast={isLast} />
                     </Box>
                 </Flex>
             </Box>

@@ -46,7 +46,7 @@ function getDialogflowChipsContent(channelMetadata: ChannelMetadata | null): Dia
     return null;
 }
 
-export const ChannelMetaData = ({ channelMetadata }: { channelMetadata: ChannelMetadata | null }) => {
+export const ChannelMetaData = ({ channelMetadata, isLast }: { channelMetadata: ChannelMetadata | null, isLast: boolean }) => {
     const { conversation } = useSelector((state: AppState) => ({
         conversation: state.chat.conversation
     }));
@@ -60,6 +60,11 @@ export const ChannelMetaData = ({ channelMetadata }: { channelMetadata: ChannelM
     const chipOptions = dialogflowChipsContent.options.map(x => x.text);
 
     const send = async (text: string) => {
+        if (!isLast) {
+            // Intentionally do nothing
+            return;
+        }
+        
         if (!conversation) {
             log.error("Failed sending message: no conversation found");
             return;
