@@ -13,10 +13,7 @@ provider:
     API_SECRET: ${env:API_SECRET}
     ADDRESS_SID: ${env:ADDRESS_SID}
     CONVERSATIONS_SERVICE_SID: ${env:CONVERSATIONS_SERVICE_SID}
-    
-    #TODO: environment specific
     ALLOWED_ORIGINS: https://localhost:48264,https://merchandiser-web.survey-stage.com,https://merchandiser-web.survey.com
-    
     DOWNLOAD_TRANSCRIPT_ENABLED: false
     EMAIL_TRANSCRIPT_ENABLED: false
 
