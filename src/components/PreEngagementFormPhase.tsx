@@ -16,7 +16,7 @@ import { NotificationBar } from "./NotificationBar";
 import { fieldStyles, titleStyles, formStyles } from "./styles/PreEngagementFormPhase.styles";
 
 export const PreEngagementFormPhase = () => {
-    const { name, email, query } = useSelector((state: AppState) => state.session.preEngagementData) || {};
+    const { id, name, email, query } = useSelector((state: AppState) => state.session.preEngagementData) || {};
     const dispatch = useDispatch();
 
     const handleSubmit = async (e: FormEvent) => {
@@ -25,6 +25,7 @@ export const PreEngagementFormPhase = () => {
         try {
             const data = await sessionDataHandler.fetchAndStoreNewSession({
                 formData: {
+                    id,
                     friendlyName: name,
                     email,
                     query
