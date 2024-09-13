@@ -1,4 +1,4 @@
-import {ChannelMetadata, Media, Message} from "@twilio/conversations";
+import { ChannelMetadata, Media, Message } from "@twilio/conversations";
 import { Box } from "@twilio-paste/core/box";
 import { ScreenReaderOnly } from "@twilio-paste/core/screen-reader-only";
 import { useSelector } from "react-redux";
@@ -21,7 +21,7 @@ import {
     readStatusStyles,
     bubbleAndAvatarContainerStyles
 } from "./styles/MessageBubble.styles";
-import {ChannelMetaData} from "./ChannelMetaData";
+import { ChannelMetaData } from "./ChannelMetaData";
 
 const doubleDigit = (number: number) => `${number < 10 ? 0 : ""}${number}`;
 
@@ -113,7 +113,7 @@ export const MessageBubble = ({
     };
 
     const author = (users?.find((u) => u.identity === message.author)?.friendlyName || message.author) as string;
-    
+
     return (
         <Box
             {...outerContainerStyles}
@@ -132,10 +132,21 @@ export const MessageBubble = ({
                         {isLastOfUserGroup && <UserIcon decorative={true} size="sizeIcon40" />}
                     </Box>
                 )}
-                <Flex vertical={true} hAlignContent={belongsToCurrentUser ? "right" : "left"} width="100%" vAlignContent="center">
+                <Flex
+                    vertical={true}
+                    hAlignContent={belongsToCurrentUser ? "right" : "left"}
+                    width="100%"
+                    vAlignContent="center"
+                >
                     <Box {...getInnerContainerStyles(belongsToCurrentUser)}>
                         <Flex hAlignContent="between" width="100%" vAlignContent="center" marginBottom="space20">
-                            <Text {...authorStyles} as="p" aria-hidden style={{ textOverflow: "ellipsis" }} title={author}>
+                            <Text
+                                {...authorStyles}
+                                as="p"
+                                aria-hidden
+                                style={{ textOverflow: "ellipsis" }}
+                                title={author}
+                            >
                                 {author}
                             </Text>
                             <ScreenReaderOnly as="p">
@@ -144,9 +155,9 @@ export const MessageBubble = ({
                                     : `${users?.find((u) => u.identity === message.author)?.friendlyName} sent at`}
                             </ScreenReaderOnly>
                             <Text {...timeStampStyles} as="p">
-                                {`${doubleDigit(message.dateCreated ? message.dateCreated.getHours() : 0)}:${doubleDigit(
-                                    message.dateCreated ? message.dateCreated?.getMinutes() : 0
-                                )}`}
+                                {`${doubleDigit(
+                                    message.dateCreated ? message.dateCreated.getHours() : 0
+                                )}:${doubleDigit(message.dateCreated ? message.dateCreated?.getMinutes() : 0)}`}
                             </Text>
                         </Flex>
                         <Text as="p" {...bodyStyles}>

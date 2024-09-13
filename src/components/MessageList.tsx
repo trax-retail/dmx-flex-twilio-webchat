@@ -43,14 +43,16 @@ const isFirstOfDateGroup = (message: Message, i: number, messages: Message[]) =>
 };
 
 export const MessageList = () => {
-    const { messages, channelMetadataMap, participants, users, conversation, conversationsClient } = useSelector((state: AppState) => ({
-        messages: state.chat.messages,
-        channelMetadataMap: state.chat.channelMetadataMap,
-        participants: state.chat.participants,
-        users: state.chat.users,
-        conversation: state.chat.conversation,
-        conversationsClient: state.chat.conversationsClient
-    }));
+    const { messages, channelMetadataMap, participants, users, conversation, conversationsClient } = useSelector(
+        (state: AppState) => ({
+            messages: state.chat.messages,
+            channelMetadataMap: state.chat.channelMetadataMap,
+            participants: state.chat.participants,
+            users: state.chat.users,
+            conversation: state.chat.conversation,
+            conversationsClient: state.chat.conversationsClient
+        })
+    );
     const dispatch = useDispatch();
     const messageListRef = useRef<HTMLDivElement>(null);
     const isLoadingMessages = useRef(false);

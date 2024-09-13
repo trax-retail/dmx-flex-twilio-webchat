@@ -13,7 +13,14 @@ export const ConversationEnded = () => {
 
     const handleStartNewChat = () => {
         sessionDataHandler.clear();
-        dispatch(updatePreEngagementData({ id: window.userData.id, name: window.userData.name, query: "", email: window.userData.email }));
+        dispatch(
+            updatePreEngagementData({
+                id: window.userData.id,
+                name: window.userData.name,
+                query: "",
+                email: window.userData.email
+            })
+        );
         dispatch(changeEngagementPhase({ phase: EngagementPhase.PreEngagementForm }));
     };
 

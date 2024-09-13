@@ -41,7 +41,7 @@ export const ChatReducer: Reducer = (state: ChatState = initialState, action: An
                 users: action.payload.users,
                 participants: action.payload.participants,
                 messages: action.payload.messages,
-                channelMetadataMap: action.payload.channelMetadataMap,
+                channelMetadataMap: action.payload.channelMetadataMap
             };
         }
         case ACTION_ADD_MULTIPLE_MESSAGES: {
@@ -50,7 +50,7 @@ export const ChatReducer: Reducer = (state: ChatState = initialState, action: An
                 messages: [...action.payload.messages, ...(state.messages || [])],
                 channelMetadataMap: {
                     ...(state.channelMetadataMap || {}),
-                    ...action.payload.channelMetadataMap,
+                    ...action.payload.channelMetadataMap
                 }
             };
         }

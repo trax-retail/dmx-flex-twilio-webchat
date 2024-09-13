@@ -18,7 +18,7 @@ export type ChatState = {
     users?: User[];
     messages?: Message[];
     channelMetadataMap?: {
-        [key: Sid]: ChannelMetadata | null
+        [key: Sid]: ChannelMetadata | null;
     };
     attachedFiles?: File[];
     conversationState?: string;
