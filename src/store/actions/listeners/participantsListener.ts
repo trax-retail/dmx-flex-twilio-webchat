@@ -5,6 +5,10 @@ import { ACTION_ADD_PARTICIPANT, ACTION_REMOVE_PARTICIPANT, ACTION_UPDATE_PARTIC
 
 export const initParticipantsListener = (conversation: Conversation, dispatch: Dispatch) => {
     conversation.addListener("participantJoined", async (participant: Participant) => {
+        if (<string>participant.type === "dialogflowcx") {
+            return;
+        }
+        
         const user = await participant.getUser();
         dispatch({
             type: ACTION_ADD_PARTICIPANT,
