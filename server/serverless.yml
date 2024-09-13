@@ -42,6 +42,7 @@ resources:
       Properties:
         DomainName: !Ref ApiGatewayCustomDomain
         RestApiId: !Ref ApiGatewayRestApi
+        Stage: ${opt:stage}
 
     Route53RecordSet:
       Type: AWS::Route53::RecordSet
