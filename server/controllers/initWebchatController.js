@@ -86,7 +86,7 @@ const initWebchatController = async (request, response) => {
     // OPTIONAL — if user query is defined
     if (request.body?.formData?.query) {
         // use it to send a message in behalf of the user with the query as body
-        sendUserMessage(conversationSid, identity, request.body.formData.query);
+        await sendUserMessage(conversationSid, identity, request.body.formData.query);
     }
 
     response.send({
