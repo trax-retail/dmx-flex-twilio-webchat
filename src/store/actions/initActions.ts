@@ -47,7 +47,7 @@ export function initSession({ token, conversationSid }: { token: string; convers
                 await Promise.all(
                     messages.map(async (m) => <[string, ChannelMetadata | null]>[m.sid, await m.getChannelMetadata()])
                 )
-            ).reduce((p, c) => ({ [c[0]]: c[1], ...p }));
+            ).reduce((p, c) => ({ [c[0]]: c[1], ...p }), {});
         } catch (e) {
             log.error("Something went wrong when initializing session", e);
             throw e;

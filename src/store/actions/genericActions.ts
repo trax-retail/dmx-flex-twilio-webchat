@@ -49,7 +49,7 @@ export function getMoreMessages({ anchor, conversation }: { anchor: number; conv
             await Promise.all(
                 messages.map(async (m) => <[string, ChannelMetadata | null]>[m.sid, await m.getChannelMetadata()])
             )
-        ).reduce((p, c) => ({ [c[0]]: c[1], ...p }));
+        ).reduce((p, c) => ({ [c[0]]: c[1], ...p }), {});
 
         dispatch({
             type: ACTION_ADD_MULTIPLE_MESSAGES,
