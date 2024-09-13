@@ -32,7 +32,9 @@ resources:
       Type: AWS::ApiGateway::DomainName
       Properties:
         DomainName: twilio-flex.${env:AWS_HOSTED_ZONE_DOMAIN}
-        EndpointConfiguration: REGIONAL
+        EndpointConfiguration:
+          Types:
+            - REGIONAL
         RegionalCertificateArn: ${env:AWS_CERTIFICATE_ARN}
 
     ApiGatewayBasePathMapping:
