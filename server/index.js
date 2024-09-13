@@ -4,7 +4,6 @@ const express = require("express");
 const { validateRequestOriginMiddleware } = require("./middlewares/validateRequestOriginMiddleware");
 const { initWebchatController } = require("./controllers/initWebchatController");
 const { refreshTokenController } = require("./controllers/refreshTokenController");
-const { emailTranscriptController } = require("./controllers/emailTranscriptController");
 
 const cors = require("cors");
 const { allowedOrigins } = require("./helpers/getAllowedOrigins");
@@ -24,4 +23,3 @@ app.listen(port, () => {
 
 app.post("/initWebchat", validateRequestOriginMiddleware, initWebchatController);
 app.post("/refreshToken", validateRequestOriginMiddleware, refreshTokenController);
-app.post("/email", validateRequestOriginMiddleware, emailTranscriptController);
