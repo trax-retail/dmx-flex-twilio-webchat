@@ -308,7 +308,7 @@ Find out more about [Twilio UX principles](https://paste.twilio.design/principle
 
 ### As a developer, how do I clear an ongoing chat?
 
-Open your browser console, run `localStorage.clear()` and refresh the page to start anew.
+Open your browser console, run `CookieStorage.clear()` and refresh the page to start anew.
 Alternatively, you can simply wrap up/complete the corresponding task as an agent from your Flex UI instance.
 
 ### Can I use npm?

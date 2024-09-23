@@ -1,8 +1,9 @@
 import log from "loglevel";
 
 import { Token } from "./definitions";
+import { CookieStorage } from "./utils/cookieStorage";
 
-const LOCAL_STORAGE_ITEM_ID = "TWILIO_WEBCHAT_WIDGET";
+const COOKIE_STORAGE_ITEM_ID = "TWILIO_WEBCHAT_WIDGET";
 
 let _endpoint = "";
 
@@ -24,11 +25,11 @@ export async function contactBackend<T>(endpointRoute: string, body: Record<stri
 }
 
 function storeSessionData(data: Token) {
-    localStorage.setItem(LOCAL_STORAGE_ITEM_ID, JSON.stringify(data));
+    CookieStorage.setItem(COOKIE_STORAGE_ITEM_ID, JSON.stringify(data));
 }
 
 function getStoredSessionData() {
-    const item = localStorage.getItem(LOCAL_STORAGE_ITEM_ID);
+    const item = CookieStorage.getItem(COOKIE_STORAGE_ITEM_ID);
     let storedData: Token;
 
     if (!item) {
@@ -119,6 +120,6 @@ export const sessionDataHandler = {
     },
 
     clear: () => {
-        localStorage.removeItem(LOCAL_STORAGE_ITEM_ID);
+        CookieStorage.removeItem(COOKIE_STORAGE_ITEM_ID);
     }
 };
