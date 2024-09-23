@@ -16,7 +16,7 @@ import { NotificationBar } from "./NotificationBar";
 import { fieldStyles, titleStyles, formStyles } from "./styles/PreEngagementFormPhase.styles";
 
 export const PreEngagementFormPhase = () => {
-    const { id, name, email, state, query } = useSelector((state: AppState) => state.session.preEngagementData) || {};
+    const { id, name, email, state: userState, query } = useSelector((state: AppState) => state.session.preEngagementData) || {};
     const dispatch = useDispatch();
 
     const handleSubmit = async (e: FormEvent) => {
@@ -28,7 +28,7 @@ export const PreEngagementFormPhase = () => {
                     id,
                     friendlyName: name,
                     email,
-                    state,
+                    state: userState,
                     query
                 }
             });

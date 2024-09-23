@@ -15,6 +15,7 @@ declare global {
             id: string;
             name: string;
             email: string;
+            state: string | null;
         };
     }
 }
@@ -22,7 +23,13 @@ declare global {
 const initialState: SessionState = {
     currentPhase: EngagementPhase.Loading,
     expanded: true,
-    preEngagementData: { id: window.userData.id, name: window.userData.name, query: "", email: window.userData.email }
+    preEngagementData: { 
+        id: window.userData.id,
+        name: window.userData.name,
+        email: window.userData.email,
+        state: window.userData.state,
+        query: "",
+    }
 };
 
 export const SessionReducer: Reducer<SessionState, AnyAction> = (
