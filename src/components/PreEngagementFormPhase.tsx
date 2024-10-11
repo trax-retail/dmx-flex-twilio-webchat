@@ -10,7 +10,6 @@ import { sessionDataHandler } from "../sessionDataHandler";
 import { addNotification, changeEngagementPhase, updatePreEngagementData } from "../store/actions/genericActions";
 import { initSession } from "../store/actions/initActions";
 import { AppState, EngagementPhase } from "../store/definitions";
-import { Header } from "./Header";
 import { notifications } from "../notifications";
 import { NotificationBar } from "./NotificationBar";
 import { fieldStyles, titleStyles, formStyles } from "./styles/PreEngagementFormPhase.styles";
@@ -48,7 +47,6 @@ export const PreEngagementFormPhase = () => {
 
     return (
         <>
-            <Header />
             <NotificationBar />
             <Box as="form" data-test="pre-engagement-chat-form" onSubmit={handleSubmit} {...formStyles}>
                 <Text {...titleStyles} as="h3">

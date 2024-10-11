@@ -1,7 +1,6 @@
 import { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Header } from "./Header";
 import { MessageList } from "./MessageList";
 import { MessageInput } from "./MessageInput";
 import { AppState } from "../store/definitions";
@@ -23,7 +22,6 @@ export const MessagingCanvasPhase = () => {
 
     return (
         <Wrapper>
-            <Header />
             <NotificationBar />
             <MessageList />
             {conversationState === "active" ? <MessageInput /> : <ConversationEnded />}
