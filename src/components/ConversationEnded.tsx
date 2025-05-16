@@ -17,8 +17,8 @@ export const ConversationEnded = () => {
             updatePreEngagementData({
                 id: window.userData.id,
                 name: window.userData.name,
+                email: window.userData.email,
                 query: "",
-                email: window.userData.email
             })
         );
         dispatch(changeEngagementPhase({ phase: EngagementPhase.PreEngagementForm }));
