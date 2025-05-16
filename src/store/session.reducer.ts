@@ -17,7 +17,7 @@ declare global {
             email: string;
             state: string | null;
         };
-        chatContext: object;
+        chatContext: Record<string, unknown>;
     }
 }
 
