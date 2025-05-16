@@ -24,7 +24,7 @@ export type ChatState = {
     conversationState?: string;
 };
 
-export type PreEngagementData = { id: string; name: string; email: string; state: string | null; query: string };
+export type PreEngagementData = { id: string; name: string; email: string; state: string | null; context: object | null; query: string };
 
 export type SessionState = {
     currentPhase: EngagementPhase;

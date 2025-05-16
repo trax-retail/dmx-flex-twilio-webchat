@@ -17,6 +17,7 @@ declare global {
             email: string;
             state: string | null;
         };
+        chatContext: object;
     }
 }
 
@@ -28,6 +29,7 @@ const initialState: SessionState = {
         name: window.userData.name,
         email: window.userData.email,
         state: window.userData.state,
+        context: window.chatContext,
         query: "",
     }
 };

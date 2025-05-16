@@ -18,6 +18,7 @@ export const ConversationEnded = () => {
                 id: window.userData.id,
                 name: window.userData.name,
                 email: window.userData.email,
+                context: window.chatContext,
                 query: "",
             })
         );
